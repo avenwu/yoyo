@@ -2,6 +2,7 @@ YoYo
 ======
 
 ![Logo](app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
+
 YoYo GitHub is an android application based on open api provifed by github team.
 For more information see [the website][1]
 
