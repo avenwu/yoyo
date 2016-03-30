@@ -10,11 +10,10 @@ import net.avenwu.yoyogithub.model.User;
 import java.io.IOException;
 import java.util.List;
 
-import okhttp3.Authenticator;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.Route;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -39,10 +38,13 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .addInterceptor(logging)
-                .authenticator(new Authenticator() {
+                .addNetworkInterceptor(new Interceptor() {
                     @Override
-                    public Request authenticate(Route route, Response response) throws IOException {
-                        return response.request().newBuilder().header("Accept", "application/vnd.github.v3+json").build();
+                    public Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request().newBuilder()
+                                .header("Accept", "application/vnd.github.v3+json")
+                                .build();
+                        return chain.proceed(request);
                     }
                 })
                 .build();
@@ -70,4 +72,5 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         assertNotNull(repoList.get(0).owner);
         assertEquals("avenwu", repoList.get(0).owner.login);
     }
+
 }
