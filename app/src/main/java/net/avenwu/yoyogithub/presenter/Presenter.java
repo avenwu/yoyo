@@ -56,11 +56,12 @@ public class Presenter {
         mTarget = null;
     }
 
-    public <T> void addAction(@ActionKey int key, Action<T> action) {
+    public <T> Presenter addAction(@ActionKey int key, Action<T> action) {
         if (mActionList == null) {
             mActionList = new SparseArray<>();
         }
         mActionList.put(key, action);
+        return this;
     }
 
     public <T> void invokeAction(@ActionKey int key, T data) {
