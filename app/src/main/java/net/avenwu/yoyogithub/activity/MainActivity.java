@@ -17,6 +17,7 @@ import android.view.View;
 
 import net.avenwu.yoyogithub.R;
 import net.avenwu.yoyogithub.databinding.NavHeaderMainBinding;
+import net.avenwu.yoyogithub.fragment.ContributionFragment;
 import net.avenwu.yoyogithub.fragment.FragmentUserList;
 import net.avenwu.yoyogithub.model.User;
 import net.avenwu.yoyogithub.presenter.Presenter;
@@ -127,30 +128,46 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        WeakReference<Fragment> reference = mFragments.get(id);
+        Fragment fragment = null;
         if (id == R.id.nav_contributions) {
-            WeakReference<Fragment> reference = mFragments.get(id);
-            Fragment fragment = null;
             if (reference == null || reference.get() == null) {
-                fragment = FragmentUserList.newInstance(userName);
+                fragment = ContributionFragment.newInstance(userName);
                 mFragments.put(id, new WeakReference<>(fragment));
             } else {
                 fragment = reference.get();
             }
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_content, fragment)
-                    .commitAllowingStateLoss();
+
         } else if (id == R.id.nav_repositories) {
 
         } else if (id == R.id.nav_public_activity) {
 
+        } else if (id == R.id.nav_follower) {
+            if (reference == null || reference.get() == null) {
+                fragment = FragmentUserList.newInstance(userName, FragmentUserList.FOLLOWER);
+                mFragments.put(id, new WeakReference<>(fragment));
+            } else {
+                fragment = reference.get();
+            }
+        } else if (id == R.id.nav_following) {
+            if (reference == null || reference.get() == null) {
+                fragment = FragmentUserList.newInstance(userName, FragmentUserList.FOLLOWING);
+                mFragments.put(id, new WeakReference<>(fragment));
+            } else {
+                fragment = reference.get();
+            }
         } else if (id == R.id.nav_search) {
 
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 
+        }
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_content, fragment)
+                    .commitAllowingStateLoss();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

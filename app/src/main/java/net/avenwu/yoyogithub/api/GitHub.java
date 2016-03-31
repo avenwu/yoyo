@@ -62,5 +62,8 @@ public class GitHub {
 
         @GET("/users/{user}/followers")
         Call<List<ShortUserInfo>> followers(@Path("user") String user);
+
+        @GET("/users/{user}/following")
+        Call<List<ShortUserInfo>> following(@Path("user") String user);
     }
 }

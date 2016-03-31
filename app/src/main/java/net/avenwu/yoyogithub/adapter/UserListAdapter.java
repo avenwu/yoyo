@@ -39,8 +39,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         return mValues.size();
     }
 
-    public void addDataList(List<ShortUserInfo> list) {
-        mValues.addAll(list);
+    public void addDataList(List<ShortUserInfo> list, boolean append) {
+        if (append) {
+            mValues.addAll(list);
+        } else {
+            mValues.clear();
+            mValues.addAll(list);
+        }
         notifyDataSetChanged();
     }
 
