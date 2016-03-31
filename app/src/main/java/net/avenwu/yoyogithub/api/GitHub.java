@@ -2,6 +2,7 @@ package net.avenwu.yoyogithub.api;
 
 import net.avenwu.yoyogithub.BuildConfig;
 import net.avenwu.yoyogithub.model.Repo;
+import net.avenwu.yoyogithub.model.ShortUserInfo;
 import net.avenwu.yoyogithub.model.User;
 
 import java.io.IOException;
@@ -58,5 +59,8 @@ public class GitHub {
 
         @GET("users/{user}/repos")
         Call<List<Repo>> repos(@Path("user") String user);
+
+        @GET("/users/{user}/followers")
+        Call<List<ShortUserInfo>> followers(@Path("user") String user);
     }
 }

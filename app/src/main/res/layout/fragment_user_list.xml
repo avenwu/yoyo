@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="user"
+            type="net.avenwu.yoyogithub.model.ShortUserInfo" />
+
+        <variable
+            name="listener"
+            type="net.avenwu.yoyogithub.adapter.UserListAdapter.UserClickListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_selector"
+        android:onClick="@{listener.onClickItem}"
+        android:orientation="horizontal"
+        android:tag="@{user.login}">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:scaleType="centerCrop"
+            app:error="@{@drawable/ic_sort_black_24dp}"
+            app:imageUrl="@{user.avatar_url}"
+            app:roundAsCircle="@{true}"
+            tools:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="@{user.login}"
+                android:textAppearance="?attr/textAppearanceListItem"
+                tools:text="name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:paddingTop="5dp"
+                android:singleLine="true"
+                android:text="@{user.url}"
+                android:textAppearance="?attr/textAppearanceListItemSmall"
+                tools:text="home url" />
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

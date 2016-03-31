@@ -15,9 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import net.avenwu.yoyogithub.fragment.ContributionFragment;
 import net.avenwu.yoyogithub.R;
 import net.avenwu.yoyogithub.databinding.NavHeaderMainBinding;
+import net.avenwu.yoyogithub.fragment.FragmentUserList;
 import net.avenwu.yoyogithub.model.User;
 import net.avenwu.yoyogithub.presenter.Presenter;
 import net.avenwu.yoyogithub.presenter.ProfilePresenter;
@@ -132,7 +132,7 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
             WeakReference<Fragment> reference = mFragments.get(id);
             Fragment fragment = null;
             if (reference == null || reference.get() == null) {
-                fragment = ContributionFragment.newInstance(userName);
+                fragment = FragmentUserList.newInstance(userName);
                 mFragments.put(id, new WeakReference<>(fragment));
             } else {
                 fragment = reference.get();

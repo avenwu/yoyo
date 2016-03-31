@@ -67,7 +67,7 @@ public class Presenter {
     public <T> void invokeAction(@ActionKey int key, T data) {
         if (mActionList != null) {
             Action action = mActionList.get(key);
-            if (action != null) {
+            if (action != null && mTarget != null) {
                 action.onRender(data);
             }
         }

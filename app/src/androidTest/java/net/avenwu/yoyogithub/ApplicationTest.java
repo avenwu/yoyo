@@ -5,6 +5,7 @@ import android.test.ApplicationTestCase;
 
 import net.avenwu.yoyogithub.api.GitHub;
 import net.avenwu.yoyogithub.model.Repo;
+import net.avenwu.yoyogithub.model.ShortUserInfo;
 import net.avenwu.yoyogithub.model.User;
 
 import java.util.List;
@@ -46,4 +47,10 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         assertEquals("avenwu", repoList.get(0).owner.login);
     }
 
+    public void testFollowers() throws Exception {
+        Call<List<ShortUserInfo>> call = service.followers("avenwu");
+        List<ShortUserInfo> shortUserInfos = call.execute().body();
+        assertNotNull(shortUserInfos);
+        assertEquals(true, shortUserInfos.size() > 0);
+    }
 }
