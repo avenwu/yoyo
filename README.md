@@ -16,6 +16,13 @@ So I decided to make one to satisfy myself.
 
 This project will follow the material design style, you may fork and make changed freely under the LICENCE
 
+Preview
+--------
+
+YoYo is still in develop, these are some screenshots for early preview.
+
+![device-2016-03-31-223548.png](doc/device-2016-03-31-223548.png)
+![device-2016-03-31-231330.png](doc/device-2016-03-31-231330.png)
 
 License
 -------
