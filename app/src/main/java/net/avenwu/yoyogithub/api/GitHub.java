@@ -7,6 +7,7 @@ import net.avenwu.yoyogithub.model.User;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -28,25 +29,28 @@ public class GitHub {
     public static GitHubService api() {
         if (service == null) {
             OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                    .addNetworkInterceptor(new Interceptor() {
-                        @Override
-                        public Response intercept(Chain chain) throws IOException {
-                            Request request = chain.request().newBuilder()
-                                    .header("Accept", "application/vnd.github.v3+json")
-                                    .build();
-                            return chain.proceed(request);
-                        }
-                    });
+                .addNetworkInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request().newBuilder()
+                            .header("Accept", "application/vnd.github.v3+json")
+                            .build();
+                        return chain.proceed(request);
+                    }
+                })
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS);
             if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY);
                 builder.addInterceptor(logging);
             }
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://api.github.com/")
-                    .addConverterFactory(MoshiConverterFactory.create())
-                    .client(builder.build())
-                    .build();
+                .baseUrl("https://api.github.com/")
+                .addConverterFactory(MoshiConverterFactory.create())
+                .client(builder.build())
+                .build();
             service = retrofit.create(GitHubService.class);
         }
         return service;

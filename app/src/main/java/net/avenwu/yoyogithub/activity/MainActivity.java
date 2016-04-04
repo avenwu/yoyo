@@ -18,42 +18,35 @@ import android.view.View;
 import net.avenwu.yoyogithub.R;
 import net.avenwu.yoyogithub.databinding.NavHeaderMainBinding;
 import net.avenwu.yoyogithub.fragment.ContributionFragment;
+import net.avenwu.yoyogithub.fragment.FragmentRepoList;
 import net.avenwu.yoyogithub.fragment.FragmentUserList;
 import net.avenwu.yoyogithub.model.User;
 import net.avenwu.yoyogithub.presenter.Presenter;
 import net.avenwu.yoyogithub.presenter.ProfilePresenter;
+import net.avenwu.yoyogithub.widget.EmptyLayout;
 
 import java.lang.ref.WeakReference;
 
 public class MainActivity extends BaseActivity<ProfilePresenter>
-        implements NavigationView.OnNavigationItemSelectedListener {
+    implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawer;
     NavigationView navigationView;
     //TODO
     String userName = "avenwu";
     SparseArray<WeakReference<Fragment>> mFragments = new SparseArray<>(4);
+    EmptyLayout mEmptyLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mEmptyLayout = (EmptyLayout) findViewById(R.id.empty_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (fab != null) {
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            });
-        }
-
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -68,6 +61,7 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
                 data.addAction(Presenter.ACTION_1, new Presenter.Action<User>() {
                     @Override
                     public void onRender(User data) {
+                        mEmptyLayout.setType(EmptyLayout.HIDE);
                         NavHeaderMainBinding binding = NavHeaderMainBinding.inflate((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE));
                         binding.setUser(data);
                         if (navigationView != null) {
@@ -78,18 +72,26 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
                 }).addAction(Presenter.ACTION_2, new Presenter.Action<String>() {
                     @Override
                     public void onRender(String data) {
-                        Snackbar.make(fab, data, Snackbar.LENGTH_LONG).setAction("Retry", null).show();
+                        mEmptyLayout.setType(EmptyLayout.EMPTY);
+                        mEmptyLayout.setErrorMessage(data);
+                        mEmptyLayout.setOnLayoutClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                presenter(new Presenter.Action<ProfilePresenter>() {
+                                    @Override
+                                    public void onRender(ProfilePresenter data) {
+                                        mEmptyLayout.setType(EmptyLayout.LOADING);
+                                        data.fetchUserData(userName);
+                                    }
+                                });
+                            }
+                        });
                     }
                 });
-            }
-        });
-        presenter(new Presenter.Action<ProfilePresenter>() {
-            @Override
-            public void onRender(ProfilePresenter data) {
+                mEmptyLayout.setType(EmptyLayout.LOADING);
                 data.fetchUserData(userName);
             }
         });
-
     }
 
     @Override
@@ -139,7 +141,12 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
             }
 
         } else if (id == R.id.nav_repositories) {
-
+            if (reference == null || reference.get() == null) {
+                fragment = FragmentRepoList.newInstance(userName);
+                mFragments.put(id, new WeakReference<>(fragment));
+            } else {
+                fragment = reference.get();
+            }
         } else if (id == R.id.nav_public_activity) {
 
         } else if (id == R.id.nav_follower) {
@@ -165,9 +172,9 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
         }
         if (fragment != null) {
             getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_content, fragment)
-                    .commitAllowingStateLoss();
+                .beginTransaction()
+                .replace(R.id.main_content, fragment)
+                .commitAllowingStateLoss();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

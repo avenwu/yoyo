@@ -7,24 +7,24 @@ import android.widget.Toast;
 
 import net.avenwu.yoyogithub.BR;
 import net.avenwu.yoyogithub.R;
-import net.avenwu.yoyogithub.model.ShortUserInfo;
+import net.avenwu.yoyogithub.model.Repo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserListAdapter extends RecyclerView.Adapter<DataBindingViewHolder> {
+public class RepoListAdapter extends RecyclerView.Adapter<DataBindingViewHolder> {
 
-    private final List<ShortUserInfo> mValues = new ArrayList<>();
-    private UserClickListener mItemListener = new UserClickListener();
+    private final List<Repo> mValues = new ArrayList<>();
+    private RepoClickListener mItemListener = new RepoClickListener();
 
     @Override
     public DataBindingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new DataBindingViewHolder(parent, R.layout.user_item_layout);
+        return new DataBindingViewHolder(parent, R.layout.repo_item_layout);
     }
 
     @Override
-    public void onBindViewHolder(final DataBindingViewHolder holder, int position) {
-        holder.getBinding().setVariable(BR.user, mValues.get(position));
+    public void onBindViewHolder(DataBindingViewHolder holder, int position) {
+        holder.getBinding().setVariable(BR.repo, mValues.get(position));
         holder.getBinding().setVariable(BR.listener, mItemListener);
         holder.getBinding().executePendingBindings();
     }
@@ -34,7 +34,7 @@ public class UserListAdapter extends RecyclerView.Adapter<DataBindingViewHolder>
         return mValues.size();
     }
 
-    public void addDataList(List<ShortUserInfo> list, boolean append) {
+    public void addDataList(List<Repo> list, boolean append) {
         if (append) {
             mValues.addAll(list);
         } else {
@@ -44,8 +44,7 @@ public class UserListAdapter extends RecyclerView.Adapter<DataBindingViewHolder>
         notifyDataSetChanged();
     }
 
-
-    public static class UserClickListener {
+    public static class RepoClickListener {
         public void onClickItem(View view) {
             if (view.getTag() instanceof String) {
                 Toast.makeText(view.getContext(), (String) view.getTag(), Toast.LENGTH_SHORT).show();

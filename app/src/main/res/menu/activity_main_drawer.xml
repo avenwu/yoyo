@@ -16,11 +16,11 @@
             android:title="Public activity" />
         <item
             android:id="@+id/nav_follower"
-            android:icon="@drawable/ic_search_black_24dp"
+            android:icon="@drawable/ic_group_add_black_24dp"
             android:title="Follower" />
         <item
             android:id="@+id/nav_following"
-            android:icon="@drawable/ic_search_black_24dp"
+            android:icon="@drawable/ic_people_black_24dp"
             android:title="Following" />
         <item
             android:id="@+id/nav_search"

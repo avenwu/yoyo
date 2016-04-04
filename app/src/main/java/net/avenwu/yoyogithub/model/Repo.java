@@ -103,8 +103,8 @@ public class Repo {
     public String git_url;
     public String clone_url;
     public String language;
-    public long forks_count;
+    public long forks;
     public long open_issues_count;
-    public long watchers_count;
+    public long watchers;
 
 }

@@ -9,43 +9,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import net.avenwu.yoyogithub.adapter.UserListAdapter;
+import net.avenwu.yoyogithub.adapter.RepoListAdapter;
 import net.avenwu.yoyogithub.model.Key;
-import net.avenwu.yoyogithub.model.ShortUserInfo;
-import net.avenwu.yoyogithub.model.UserListType;
+import net.avenwu.yoyogithub.model.Repo;
 import net.avenwu.yoyogithub.presenter.Presenter;
-import net.avenwu.yoyogithub.presenter.UserPresenter;
+import net.avenwu.yoyogithub.presenter.RepoPresenter;
 import net.avenwu.yoyogithub.widget.RecyclerViewDecorator;
 
 import java.util.List;
 
-
 /**
- * User list:follower or following
+ * Created by chaobin on 4/4/16.
  */
-public class FragmentUserList extends BaseFragment<UserPresenter> implements RecyclerViewDecorator.Callback {
-
+public class FragmentRepoList extends BaseFragment<RepoPresenter> implements RecyclerViewDecorator.Callback {
     private String mUser;
-    private int mType;
     private RecyclerViewDecorator mHelper;
 
-    @UserListType
-    public static final int FOLLOWER = 0;
-    @UserListType
-    public static final int FOLLOWING = 1;
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public FragmentUserList() {
+    public FragmentRepoList() {
     }
 
-    public static FragmentUserList newInstance(String user, @UserListType int type) {
-        FragmentUserList fragment = new FragmentUserList();
+    public static FragmentRepoList newInstance(String user) {
+        FragmentRepoList fragment = new FragmentRepoList();
         Bundle args = new Bundle();
         args.putString(Key.USER, user);
-        args.putInt(Key.TYPE, type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,7 +41,6 @@ public class FragmentUserList extends BaseFragment<UserPresenter> implements Rec
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mUser = getArguments().getString(Key.USER);
-            mType = getArguments().getInt(Key.TYPE);
         }
     }
 
@@ -72,7 +57,7 @@ public class FragmentUserList extends BaseFragment<UserPresenter> implements Rec
 
     @Override
     public RecyclerView.Adapter onCreateAdapter() {
-        return new UserListAdapter();
+        return new RepoListAdapter();
     }
 
     @Override
@@ -81,18 +66,16 @@ public class FragmentUserList extends BaseFragment<UserPresenter> implements Rec
         if (mHelper.getEmptyLayout() != null) {
             mHelper.getEmptyLayout().setBackgroundColor(Color.WHITE);
         }
-        presenter(new Presenter.Action<UserPresenter>() {
+        presenter(new Presenter.Action<RepoPresenter>() {
             @Override
-            public void onRender(UserPresenter data) {
-                data.addAction(Presenter.ACTION_1, new Presenter.Action<List<ShortUserInfo>>() {
+            public void onRender(RepoPresenter data) {
+                data.addAction(Presenter.ACTION_1, new Presenter.Action<List<Repo>>() {
                     @Override
-                    public void onRender(List<ShortUserInfo> data) {
+                    public void onRender(List<Repo> data) {
                         mHelper.stopRefreshing();
-                        ((UserListAdapter) mHelper.getRecyclerView().getAdapter()).addDataList(data, false);
+                        ((RepoListAdapter) mHelper.getRecyclerView().getAdapter()).addDataList(data, false);
                     }
-                });
-
-                data.addAction(Presenter.ACTION_2, new Presenter.Action<String>() {
+                }).addAction(Presenter.ACTION_2, new Presenter.Action<String>() {
                     @Override
                     public void onRender(String data) {
                         mHelper.stopRefreshing();
@@ -100,28 +83,18 @@ public class FragmentUserList extends BaseFragment<UserPresenter> implements Rec
                     }
                 });
                 mHelper.startLoading();
-                fetchData(data);
+                data.fetchRepo(mUser);
             }
         });
-    }
 
-    private void fetchData(UserPresenter data) {
-        switch (mType) {
-            case FOLLOWER:
-                data.fetchFollowers(mUser);
-                break;
-            case FOLLOWING:
-                data.fetchFollowing(mUser);
-                break;
-        }
     }
 
     @Override
     public void onRefresh(SwipeRefreshLayout swipeRefreshLayout) {
-        presenter(new Presenter.Action<UserPresenter>() {
+        presenter(new Presenter.Action<RepoPresenter>() {
             @Override
-            public void onRender(UserPresenter data) {
-                fetchData(data);
+            public void onRender(RepoPresenter data) {
+                data.fetchRepo(mUser);
             }
         });
     }
