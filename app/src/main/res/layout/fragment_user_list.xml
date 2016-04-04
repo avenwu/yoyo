@@ -14,17 +14,16 @@
             type="net.avenwu.yoyogithub.adapter.UserListAdapter.UserClickListener" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/item_selector"
         android:onClick="@{listener.onClickItem}"
-        android:orientation="horizontal"
         android:tag="@{user.login}">
 
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -38,7 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="72dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:orientation="vertical">
 
             <TextView
@@ -59,6 +59,6 @@
                 android:textAppearance="?attr/textAppearanceListItemSmall"
                 tools:text="home url" />
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 </layout>

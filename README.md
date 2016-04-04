@@ -1,25 +1,26 @@
 YoYo
 ======
 
-![Logo](app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
+![YoYo Logo](app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
 
-YoYo GitHub is an android application based on open api provifed by github team.
+YoYo GitHub is an android application based on open api provided by GitHub team.
 For more information see [the website][1]
 
 
 Why
 --------
 
-Github hosts thousands of open-source projects, it would be nice to have an well designed android client;
-however github team are focused mainly on web side feature and have stopped maintaining the official android application.
-So I decided to make one to satisfy myself.
+GitHub hosts thousands of open-source projects, it would be nice to have an well designed android
+ client; however they are focused mainly on web side feature and have stopped maintaining the
+ official android application. So I decided to make one to satisfy myself.
 
-This project will follow the material design style, you may fork and make changed freely under the LICENCE
+This project will follow the [material design][2] style, you may fork and make changed freely under
+the LICENCE
 
 Preview
 --------
 
-YoYo is still in develop, these are some screenshots for early preview.
+Attention! YoYo is currently in develop, these are some screenshots for early preview.
 
 ![device-2016-03-31-223548.png](doc/device-2016-03-31-223548.png)
 ![device-2016-03-31-231330.png](doc/device-2016-03-31-231330.png)
@@ -40,3 +41,4 @@ License
     limitations under the License.
 
  [1]: http://avenwu.net/yoyo
+ [1]: http://www.google.com/design/spec/material-design/introduction.html
