@@ -13,7 +13,7 @@ public class TimeUnitTest {
 
     @Test
     public void testJoinTime() throws Exception {
-        String time = TimeUtils.formatTime("2012-04-08T00:58:02Z");
+        String time = TimeUtils.formatTimeASJoined("2012-04-08T00:58:02Z");
         assertEquals("Apr 8, 2012", time);
     }
 }

@@ -1,11 +1,11 @@
 YoYo
 ======
-
-![YoYo Logo](app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
+[![Build Status](https://travis-ci.org/avenwu/yoyo.svg?branch=master)](https://travis-ci.org/avenwu/yoyo)
 
 YoYo GitHub is an android application based on open api provided by GitHub team.
 For more information see [the website][1]
 
+![YoYo Logo](app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
 
 Why
 --------
