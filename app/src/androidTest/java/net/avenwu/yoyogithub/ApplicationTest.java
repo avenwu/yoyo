@@ -4,9 +4,9 @@ import android.app.Application;
 import android.test.ApplicationTestCase;
 
 import net.avenwu.yoyogithub.api.GitHub;
-import net.avenwu.yoyogithub.model.Repo;
-import net.avenwu.yoyogithub.model.ShortUserInfo;
-import net.avenwu.yoyogithub.model.User;
+import net.avenwu.yoyogithub.bean.Repo;
+import net.avenwu.yoyogithub.bean.ShortUserInfo;
+import net.avenwu.yoyogithub.bean.User;
 
 import java.util.List;
 

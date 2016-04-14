@@ -45,7 +45,7 @@ public class TimeUtils {
     }
 
     /**
-     * {@link net.avenwu.yoyogithub.model.User#created_at}
+     * {@link net.avenwu.yoyogithub.bean.User#created_at}
      *
      * @param timeString
      * @return

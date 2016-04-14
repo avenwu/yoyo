@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import net.avenwu.yoyogithub.BR;
 import net.avenwu.yoyogithub.R;
-import net.avenwu.yoyogithub.model.Repo;
+import net.avenwu.yoyogithub.bean.Repo;
 
 import java.util.ArrayList;
 import java.util.List;

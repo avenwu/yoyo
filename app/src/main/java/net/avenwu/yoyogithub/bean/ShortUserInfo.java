@@ -1,4 +1,4 @@
-package net.avenwu.yoyogithub.model;
+package net.avenwu.yoyogithub.bean;
 /*
 [
   {
@@ -30,5 +30,5 @@ public class ShortUserInfo {
     public String login;
     public long id;
     public String avatar_url;
-    public String url;
+    public String html_url;
 }

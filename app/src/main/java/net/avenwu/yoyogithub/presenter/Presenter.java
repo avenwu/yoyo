@@ -2,15 +2,9 @@ package net.avenwu.yoyogithub.presenter;
 
 import android.util.SparseArray;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-import java.lang.ref.WeakReference;
+import net.avenwu.yoyogithub.annotation.ActionKey;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.LOCAL_VARIABLE;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.RetentionPolicy.CLASS;
+import java.lang.ref.WeakReference;
 
 /**
  * Created by aven on 3/30/16.
@@ -75,11 +69,5 @@ public class Presenter {
 
     public interface Action<T> {
         void onRender(T data);
-    }
-
-    @Retention(CLASS)
-    @Target({PARAMETER, METHOD, LOCAL_VARIABLE, FIELD})
-    public @interface ActionKey {
-
     }
 }

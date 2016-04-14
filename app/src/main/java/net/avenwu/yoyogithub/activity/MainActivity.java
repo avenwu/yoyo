@@ -1,9 +1,7 @@
 package net.avenwu.yoyogithub.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,7 +18,7 @@ import net.avenwu.yoyogithub.databinding.NavHeaderMainBinding;
 import net.avenwu.yoyogithub.fragment.ContributionFragment;
 import net.avenwu.yoyogithub.fragment.FragmentRepoList;
 import net.avenwu.yoyogithub.fragment.FragmentUserList;
-import net.avenwu.yoyogithub.model.User;
+import net.avenwu.yoyogithub.bean.User;
 import net.avenwu.yoyogithub.presenter.Presenter;
 import net.avenwu.yoyogithub.presenter.ProfilePresenter;
 import net.avenwu.yoyogithub.widget.EmptyLayout;

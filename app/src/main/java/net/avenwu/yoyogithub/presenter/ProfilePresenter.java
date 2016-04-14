@@ -1,7 +1,7 @@
 package net.avenwu.yoyogithub.presenter;
 
 import net.avenwu.yoyogithub.api.GitHub;
-import net.avenwu.yoyogithub.model.User;
+import net.avenwu.yoyogithub.bean.User;
 
 import retrofit2.Call;
 import retrofit2.Callback;

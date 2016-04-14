@@ -1,7 +1,7 @@
 package net.avenwu.yoyogithub.presenter;
 
 import net.avenwu.yoyogithub.api.GitHub;
-import net.avenwu.yoyogithub.model.ShortUserInfo;
+import net.avenwu.yoyogithub.bean.ShortUserInfo;
 
 import java.util.List;
 

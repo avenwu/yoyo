@@ -1,11 +1,15 @@
 package net.avenwu.yoyogithub.api;
 
+import android.os.SystemClock;
+import android.util.Log;
+
 import net.avenwu.yoyogithub.BuildConfig;
-import net.avenwu.yoyogithub.model.Repo;
-import net.avenwu.yoyogithub.model.ShortUserInfo;
-import net.avenwu.yoyogithub.model.User;
+import net.avenwu.yoyogithub.bean.Repo;
+import net.avenwu.yoyogithub.bean.ShortUserInfo;
+import net.avenwu.yoyogithub.bean.User;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -24,36 +28,44 @@ import retrofit2.http.Path;
  * Created by aven on 3/30/16.
  */
 public class GitHub {
-    static GitHubService service;
+    /**
+     * static holder is kind of way to make service as singleton
+     */
+    private static class GitHubHolder {
+        static GitHubService service;
 
-    public static GitHubService api() {
-        if (service == null) {
+        static {
             OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .addNetworkInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request request = chain.request().newBuilder()
-                            .header("Accept", "application/vnd.github.v3+json")
-                            .build();
-                        return chain.proceed(request);
-                    }
-                })
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS);
+                    .addNetworkInterceptor(new Interceptor() {
+                        @Override
+                        public Response intercept(Chain chain) throws IOException {
+                            Request request = chain.request().newBuilder()
+                                    .header("Accept", "application/vnd.github.v3+json")
+                                    .build();
+                            return chain.proceed(request);
+                        }
+                    })
+                    .connectTimeout(30, TimeUnit.SECONDS)
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS);
             if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY);
                 builder.addInterceptor(logging);
             }
             Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.github.com/")
-                .addConverterFactory(MoshiConverterFactory.create())
-                .client(builder.build())
-                .build();
+                    .baseUrl("https://api.github.com/")
+                    .addConverterFactory(MoshiConverterFactory.create())
+                    .client(builder.build())
+                    .build();
             service = retrofit.create(GitHubService.class);
+            Log.d("GitHub", "service init:" + SystemClock.elapsedRealtime());
         }
-        return service;
+    }
+
+    public static GitHubService api() {
+        Log.d("GitHub", "call api:" + SystemClock.elapsedRealtime());
+        return GitHubHolder.service;
     }
 
     public interface GitHubService {

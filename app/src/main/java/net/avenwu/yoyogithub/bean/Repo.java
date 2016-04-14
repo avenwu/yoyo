@@ -1,4 +1,4 @@
-package net.avenwu.yoyogithub.model;
+package net.avenwu.yoyogithub.bean;
 /*
 {
     "id": 54779440,

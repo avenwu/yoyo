@@ -7,7 +7,7 @@
 
         <variable
             name="user"
-            type="net.avenwu.yoyogithub.model.ShortUserInfo" />
+            type="net.avenwu.yoyogithub.bean.ShortUserInfo" />
 
         <variable
             name="listener"
@@ -28,38 +28,38 @@
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:scaleType="centerCrop"
-            app:error="@{@drawable/ic_sort_black_24dp}"
+            app:error="@{@drawable/ic_person_avatar}"
             app:imageUrl="@{user.avatar_url}"
             app:roundAsCircle="@{true}"
-            tools:src="@mipmap/ic_launcher" />
+            tools:src="@drawable/ic_person_avatar" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_nick_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_centerVertical="true"
+            android:layout_height="20dp"
             android:layout_marginLeft="72dp"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:orientation="vertical">
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:singleLine="true"
+            android:text="@{user.login}"
+            android:textAppearance="?attr/textAppearanceListItem"
+            tools:text="name" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:text="@{user.login}"
-                android:textAppearance="?attr/textAppearanceListItem"
-                tools:text="name" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:paddingTop="5dp"
-                android:singleLine="true"
-                android:text="@{user.url}"
-                android:textAppearance="?attr/textAppearanceListItemSmall"
-                tools:text="home url" />
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@+id/tv_nick_name"
+            android:layout_marginLeft="72dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:autoLink="web"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            android:textSize="14sp"
+            app:link_underline="@{false}"
+            app:url_text="@{user.html_url}"
+            tools:text="https://www.github.com" />
     </RelativeLayout>
 
 </layout>

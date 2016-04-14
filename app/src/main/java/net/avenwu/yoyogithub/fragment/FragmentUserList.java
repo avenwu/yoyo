@@ -10,11 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import net.avenwu.yoyogithub.adapter.UserListAdapter;
-import net.avenwu.yoyogithub.model.Key;
-import net.avenwu.yoyogithub.model.ShortUserInfo;
-import net.avenwu.yoyogithub.model.UserListType;
+import net.avenwu.yoyogithub.annotation.UserListType;
+import net.avenwu.yoyogithub.bean.ShortUserInfo;
 import net.avenwu.yoyogithub.presenter.Presenter;
 import net.avenwu.yoyogithub.presenter.UserPresenter;
+import net.avenwu.yoyogithub.bean.Key;
 import net.avenwu.yoyogithub.widget.RecyclerViewDecorator;
 
 import java.util.List;
@@ -63,11 +63,11 @@ public class FragmentUserList extends BaseFragment<UserPresenter> implements Rec
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         return new RecyclerViewDecorator.Builder(this)
-            .withLoadMore(false)
-            .withRefresh(true)
-            .withEmptyLayout(true)
-            .create(getActivity())
-            .getView();
+                .withLoadMore(false)
+                .withRefresh(true)
+                .withEmptyLayout(true)
+                .create(getActivity())
+                .getView();
     }
 
     @Override

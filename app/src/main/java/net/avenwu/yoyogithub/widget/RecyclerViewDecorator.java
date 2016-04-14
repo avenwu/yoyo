@@ -1,7 +1,12 @@
 package net.avenwu.yoyogithub.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -23,11 +28,11 @@ import net.avenwu.yoyogithub.R;
  * 2. BaseEmptyLayout[optional];<br>
  * 3. SwipeRefreshLayout[optional];<br>
  * 4. Load more[optional]<br>
- * <p>
+ * <p/>
  * Keep in mind {@link RecyclerViewDecorator} only provide simple UI elements,
  * which means it has nothing to with API request or Data handling, you need do all these stuff
  * manually according to different cases;
- * <p>
+ * <p/>
  * Example:
  * <pre>{@code
  *      RecyclerViewDecorator decorator = new RecyclerViewDecorator.Builder(new Callback() {
@@ -286,9 +291,9 @@ public class RecyclerViewDecorator {
      * add item divide to RecyclerView instacne
      *
      * @param recyclerView target instance
-     * @param height       divider height
+     * @param height       divider height(dp)
      */
-    public static void setVerticalLine(RecyclerView recyclerView, int height) {
+    public static void setVerticalLine(RecyclerView recyclerView, float height) {
         recyclerView.addItemDecoration(new DividerDecoration(
                 (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height,
                         recyclerView.getContext().getResources().getDisplayMetrics())));
@@ -296,15 +301,45 @@ public class RecyclerViewDecorator {
 
     static class DividerDecoration extends RecyclerView.ItemDecoration {
         int mDividerHeight;
+        Rect mDividerRect = new Rect();
+        Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
         public DividerDecoration(int height) {
             mDividerHeight = height;
+            mPaint.setColor(0xFFEEEEEE);
+            mPaint.setStyle(Paint.Style.FILL);
         }
 
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
             super.getItemOffsets(outRect, view, parent, state);
             outRect.bottom = mDividerHeight;
+        }
+
+        /**
+         * draw our divider with specific so we don't need to set background of the RecyclerView instance
+         *
+         * @param c
+         * @param parent
+         * @param state
+         */
+        @Override
+        public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+            super.onDrawOver(c, parent, state);
+            int left = parent.getPaddingLeft();
+            int right = parent.getWidth() - parent.getPaddingRight();
+
+            int childCount = parent.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View child = parent.getChildAt(i);
+
+                RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+
+                int top = child.getBottom() + params.bottomMargin;
+                int bottom = top + mDividerHeight;
+                mDividerRect.set(left, top, right, bottom);
+                c.drawRect(mDividerRect, mPaint);
+            }
         }
     }
 

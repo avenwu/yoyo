@@ -1,7 +1,7 @@
 package net.avenwu.yoyogithub.presenter;
 
 import net.avenwu.yoyogithub.api.GitHub;
-import net.avenwu.yoyogithub.model.Repo;
+import net.avenwu.yoyogithub.bean.Repo;
 
 import java.util.List;
 

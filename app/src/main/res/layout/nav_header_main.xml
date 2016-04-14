@@ -13,7 +13,7 @@
 
         <variable
             name="user"
-            type="net.avenwu.yoyogithub.model.User"/>
+            type="net.avenwu.yoyogithub.bean.User"/>
     </data>
 
     <LinearLayout

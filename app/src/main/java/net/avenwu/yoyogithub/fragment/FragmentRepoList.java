@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import net.avenwu.yoyogithub.adapter.RepoListAdapter;
-import net.avenwu.yoyogithub.model.Key;
-import net.avenwu.yoyogithub.model.Repo;
+import net.avenwu.yoyogithub.bean.Repo;
 import net.avenwu.yoyogithub.presenter.Presenter;
 import net.avenwu.yoyogithub.presenter.RepoPresenter;
+import net.avenwu.yoyogithub.bean.Key;
 import net.avenwu.yoyogithub.widget.RecyclerViewDecorator;
 
 import java.util.List;
@@ -66,6 +66,7 @@ public class FragmentRepoList extends BaseFragment<RepoPresenter> implements Rec
         if (mHelper.getEmptyLayout() != null) {
             mHelper.getEmptyLayout().setBackgroundColor(Color.WHITE);
         }
+        RecyclerViewDecorator.setVerticalLine(helper.getRecyclerView(), 1);
         presenter(new Presenter.Action<RepoPresenter>() {
             @Override
             public void onRender(RepoPresenter data) {
