@@ -68,6 +68,7 @@ public class GitHub {
         return GitHubHolder.service;
     }
 
+
     public interface GitHubService {
 
         @GET("users/{user}")
