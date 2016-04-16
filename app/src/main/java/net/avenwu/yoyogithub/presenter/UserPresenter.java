@@ -16,6 +16,7 @@ public class UserPresenter extends Presenter {
 
     public void fetchFollowers(String user) {
         GitHub.api().followers(user).enqueue(new Callback<List<ShortUserInfo>>() {
+
             @Override
             public void onResponse(Call<List<ShortUserInfo>> call, Response<List<ShortUserInfo>> response) {
                 invokeAction(ACTION_1, response.body());
@@ -30,6 +31,7 @@ public class UserPresenter extends Presenter {
 
     public void fetchFollowing(String user) {
         GitHub.api().following(user).enqueue(new Callback<List<ShortUserInfo>>() {
+
             @Override
             public void onResponse(Call<List<ShortUserInfo>> call, Response<List<ShortUserInfo>> response) {
                 invokeAction(ACTION_1, response.body());

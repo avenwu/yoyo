@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="net.avenwu.yoyogithub.util.TimeUtils" />
+
+        <import type="android.text.Html" />
+
+        <variable
+            name="feed"
+            type="net.avenwu.yoyogithub.bean.Entry" />
+
+        <variable
+            name="listener"
+            type="net.avenwu.yoyogithub.adapter.UserFeedAdapter.FeedClickListener" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_selector"
+        android:onClick="@{listener.onClickItem}"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:tag="@{feed.author}">
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:error="@{@drawable/ic_person_avatar}"
+            app:imageUrl="@{feed.thumbnail.url}"
+            app:roundAsCircle="@{true}"
+            tools:src="@drawable/ic_person_avatar" />
+
+        <TextView
+            android:id="@+id/tv_timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/iv_avatar"
+            android:gravity="center"
+            android:text="@{TimeUtils.formatTimeAsRecently(feed.updated)}"
+            android:textSize="10sp"
+            tools:text="a days ago" />
+
+        <TextView
+            android:id="@+id/tv_nick_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_timestamp"
+            android:maxLines="3"
+            android:text="@{feed.title}"
+            android:textAppearance="?attr/textAppearanceListItem"
+            tools:text="avenwu commented on issue square/retrofit#1740" />
+
+    </RelativeLayout>
+</layout>

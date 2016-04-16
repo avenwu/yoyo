@@ -4,12 +4,13 @@ import android.os.SystemClock;
 import android.util.Log;
 
 import net.avenwu.yoyogithub.BuildConfig;
+import net.avenwu.yoyogithub.bean.FeedUrl;
 import net.avenwu.yoyogithub.bean.Repo;
 import net.avenwu.yoyogithub.bean.ShortUserInfo;
 import net.avenwu.yoyogithub.bean.User;
+import net.avenwu.yoyogithub.bean.XmlFeedTimeline;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -20,9 +21,11 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
-import retrofit2.converter.moshi.MoshiConverterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Url;
 
 /**
  * Created by aven on 3/30/16.
@@ -55,7 +58,9 @@ public class GitHub {
             }
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://api.github.com/")
-                    .addConverterFactory(MoshiConverterFactory.create())
+//                    .addConverterFactory(GsonConverterFactory.create())
+//                    .addConverterFactory(SimpleXmlConverterFactory.create())
+                    .addConverterFactory(GitHubConverterFactory.create().xmlBean(XmlFeedTimeline.class))
                     .client(builder.build())
                     .build();
             service = retrofit.create(GitHubService.class);
@@ -68,7 +73,6 @@ public class GitHub {
         return GitHubHolder.service;
     }
 
-
     public interface GitHubService {
 
         @GET("users/{user}")
@@ -77,10 +81,16 @@ public class GitHub {
         @GET("users/{user}/repos")
         Call<List<Repo>> repos(@Path("user") String user);
 
-        @GET("/users/{user}/followers")
+        @GET("users/{user}/followers")
         Call<List<ShortUserInfo>> followers(@Path("user") String user);
 
-        @GET("/users/{user}/following")
+        @GET("users/{user}/following")
         Call<List<ShortUserInfo>> following(@Path("user") String user);
+
+        @GET("feeds")
+        Call<FeedUrl> feedUrl();
+
+        @GET
+        Call<XmlFeedTimeline> userFeed(@Url String url);
     }
 }

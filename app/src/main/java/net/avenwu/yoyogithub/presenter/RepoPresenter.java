@@ -15,6 +15,7 @@ import retrofit2.Response;
 public class RepoPresenter extends Presenter {
     public void fetchRepo(String user) {
         GitHub.api().repos(user).enqueue(new Callback<List<Repo>>() {
+
             @Override
             public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
                 invokeAction(ACTION_1, response.body());

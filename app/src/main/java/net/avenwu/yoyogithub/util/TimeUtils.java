@@ -64,7 +64,7 @@ public class TimeUtils {
             timeString = "Updated just now";
         } else if (timeDiff < TimeUnit.HOURS.toMillis(1)) {
             timeString = "Updated " + timeDiff / TimeUnit.HOURS.toMillis(1) + " minutes ago";
-        } else if (timeDiff < TimeUnit.DAYS.toMillis(8)) {
+        } else if (timeDiff < TimeUnit.DAYS.toMillis(8) && timeDiff > TimeUnit.DAYS.toMillis(1)) {
             timeString = "Updated " + timeDiff / TimeUnit.DAYS.toMillis(1) + " days ago";
         } else {
             timeString = "Updated on " + DateFormat.getDateInstance().format(date);

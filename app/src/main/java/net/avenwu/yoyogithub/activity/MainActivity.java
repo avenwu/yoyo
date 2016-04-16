@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import net.avenwu.yoyogithub.R;
 import net.avenwu.yoyogithub.databinding.NavHeaderMainBinding;
 import net.avenwu.yoyogithub.fragment.ContributionFragment;
 import net.avenwu.yoyogithub.fragment.FragmentRepoList;
+import net.avenwu.yoyogithub.fragment.FragmentUserFeedList;
 import net.avenwu.yoyogithub.fragment.FragmentUserList;
 import net.avenwu.yoyogithub.bean.User;
 import net.avenwu.yoyogithub.presenter.Presenter;
@@ -26,7 +28,7 @@ import net.avenwu.yoyogithub.widget.EmptyLayout;
 import java.lang.ref.WeakReference;
 
 public class MainActivity extends BaseActivity<ProfilePresenter>
-    implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawer;
     NavigationView navigationView;
     //TODO
@@ -44,7 +46,7 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -66,6 +68,7 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
                             navigationView.addHeaderView(binding.navHeaderContainer);
                         }
                         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                        drawer.openDrawer(Gravity.LEFT);
                     }
                 }).addAction(Presenter.ACTION_2, new Presenter.Action<String>() {
                     @Override
@@ -130,49 +133,42 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
         int id = item.getItemId();
         WeakReference<Fragment> reference = mFragments.get(id);
         Fragment fragment = null;
-        if (id == R.id.nav_contributions) {
-            if (reference == null || reference.get() == null) {
-                fragment = ContributionFragment.newInstance(userName);
-                mFragments.put(id, new WeakReference<>(fragment));
-            } else {
-                fragment = reference.get();
+        if (reference == null || reference.get() == null) {
+            switch (id) {
+                case R.id.nav_contributions:
+                    fragment = ContributionFragment.newInstance(userName);
+                    break;
+                case R.id.nav_repositories:
+                    fragment = FragmentRepoList.newInstance(userName);
+                    break;
+                case R.id.nav_public_activity:
+                    fragment = FragmentUserFeedList.newInstance(userName);
+                    break;
+                case R.id.nav_follower:
+                    fragment = FragmentUserList.newInstance(userName, FragmentUserList.FOLLOWER);
+                    break;
+                case R.id.nav_following:
+                    fragment = FragmentUserList.newInstance(userName, FragmentUserList.FOLLOWING);
+                    break;
+                case R.id.nav_search:
+
+                    break;
+                case R.id.nav_share:
+
+                    break;
+                case R.id.nav_send:
+
+                    break;
             }
-
-        } else if (id == R.id.nav_repositories) {
-            if (reference == null || reference.get() == null) {
-                fragment = FragmentRepoList.newInstance(userName);
-                mFragments.put(id, new WeakReference<>(fragment));
-            } else {
-                fragment = reference.get();
-            }
-        } else if (id == R.id.nav_public_activity) {
-
-        } else if (id == R.id.nav_follower) {
-            if (reference == null || reference.get() == null) {
-                fragment = FragmentUserList.newInstance(userName, FragmentUserList.FOLLOWER);
-                mFragments.put(id, new WeakReference<>(fragment));
-            } else {
-                fragment = reference.get();
-            }
-        } else if (id == R.id.nav_following) {
-            if (reference == null || reference.get() == null) {
-                fragment = FragmentUserList.newInstance(userName, FragmentUserList.FOLLOWING);
-                mFragments.put(id, new WeakReference<>(fragment));
-            } else {
-                fragment = reference.get();
-            }
-        } else if (id == R.id.nav_search) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            mFragments.put(id, new WeakReference<>(fragment));
+        } else {
+            fragment = reference.get();
         }
         if (fragment != null) {
             getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_content, fragment)
-                .commitAllowingStateLoss();
+                    .beginTransaction()
+                    .replace(R.id.main_content, fragment)
+                    .commitAllowingStateLoss();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

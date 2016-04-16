@@ -4,9 +4,12 @@ import android.app.Application;
 import android.test.ApplicationTestCase;
 
 import net.avenwu.yoyogithub.api.GitHub;
+import net.avenwu.yoyogithub.bean.Entry;
+import net.avenwu.yoyogithub.bean.FeedUrl;
 import net.avenwu.yoyogithub.bean.Repo;
 import net.avenwu.yoyogithub.bean.ShortUserInfo;
 import net.avenwu.yoyogithub.bean.User;
+import net.avenwu.yoyogithub.bean.XmlFeedTimeline;
 
 import java.util.List;
 
@@ -52,5 +55,29 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         List<ShortUserInfo> shortUserInfos = call.execute().body();
         assertNotNull(shortUserInfos);
         assertEquals(true, shortUserInfos.size() > 0);
+    }
+
+    public void testFeed() throws Exception {
+        FeedUrl feedUrl = service.feedUrl().execute().body();
+        assertNotNull(feedUrl);
+        assertNotNull(feedUrl.user_url);
+        String userFeedUrl = feedUrl.userFeedUrl("avenwu");
+        XmlFeedTimeline timeline = service.userFeed(userFeedUrl).execute().body();
+        assertNotNull(timeline);
+        assertNotNull(timeline.list);
+        assertTrue(timeline.list.size() > 0);
+        assertNotNull(timeline.title);
+        assertNotNull(timeline.updated);
+        for (Entry entry : timeline.list) {
+            assertNotNull(entry.id);
+            assertNotNull(entry.content);
+            assertNotNull(entry.link);
+            assertNotNull(entry.published);
+            assertNotNull(entry.title);
+            assertNotNull(entry.author);
+            assertNotNull(entry.author.email);
+            assertNotNull(entry.author.name);
+            assertNotNull(entry.author.uri);
+        }
     }
 }

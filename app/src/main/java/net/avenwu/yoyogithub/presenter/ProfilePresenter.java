@@ -14,6 +14,7 @@ public class ProfilePresenter extends Presenter {
 
     public void fetchUserData(String user) {
         GitHub.api().users(user).enqueue(new Callback<User>() {
+
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 invokeAction(ACTION_1, response.body());
