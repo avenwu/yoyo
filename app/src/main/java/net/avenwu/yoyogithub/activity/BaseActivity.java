@@ -3,6 +3,7 @@ package net.avenwu.yoyogithub.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import net.avenwu.yoyogithub.presenter.Presenter;
 
@@ -20,10 +21,8 @@ public class BaseActivity<P extends Presenter> extends AppCompatActivity {
         try {
             mPresenter = (P) (((Class) ((ParameterizedType) this.getClass().
                     getGenericSuperclass()).getActualTypeArguments()[0]).newInstance());
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (Throwable e) {
+            Log.e("Presenter", "failed to init presenter");
         }
         if (mPresenter != null) {
             mPresenter.attach(this);

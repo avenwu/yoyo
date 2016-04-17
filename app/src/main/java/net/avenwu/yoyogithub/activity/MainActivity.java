@@ -1,5 +1,6 @@
 package net.avenwu.yoyogithub.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -68,7 +69,7 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
                             navigationView.addHeaderView(binding.navHeaderContainer);
                         }
                         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                        drawer.openDrawer(Gravity.LEFT);
+                        drawer.openDrawer(Gravity.START);
                     }
                 }).addAction(Presenter.ACTION_2, new Presenter.Action<String>() {
                     @Override
@@ -151,8 +152,8 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
                     fragment = FragmentUserList.newInstance(userName, FragmentUserList.FOLLOWING);
                     break;
                 case R.id.nav_search:
-
-                    break;
+                    startActivity(new Intent(MainActivity.this, SearchActivity.class));
+                    return true;
                 case R.id.nav_share:
 
                     break;

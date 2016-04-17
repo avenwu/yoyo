@@ -7,6 +7,7 @@ import net.avenwu.yoyogithub.api.GitHub;
 import net.avenwu.yoyogithub.bean.Entry;
 import net.avenwu.yoyogithub.bean.FeedUrl;
 import net.avenwu.yoyogithub.bean.Repo;
+import net.avenwu.yoyogithub.bean.SearchRepoResult;
 import net.avenwu.yoyogithub.bean.ShortUserInfo;
 import net.avenwu.yoyogithub.bean.User;
 import net.avenwu.yoyogithub.bean.XmlFeedTimeline;
@@ -42,7 +43,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     public void testRepo() throws Exception {
-        Call<List<Repo>> call = service.repos("avenwu");
+        Call<List<Repo>> call = service.repos("avenwu"/*, 1, 10*/);
         List<Repo> repoList = call.execute().body();
         assertNotNull(repoList);
         assertEquals(true, repoList.size() > 0);
@@ -79,5 +80,19 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
             assertNotNull(entry.author.name);
             assertNotNull(entry.author.uri);
         }
+    }
+
+    public void testSearchRepo() throws Exception {
+        SearchRepoResult result = service.searchRepo("tetris+language", "stars", "desc").execute().body();
+        assertNotNull(result);
+        assertTrue(result.total_count > 0);
+        assertNotNull(result.items);
+        for (SearchRepoResult.Item item : result.items) {
+            assertNotNull(item);
+            assertNotNull(item.full_name);
+            assertNotNull(item.owner);
+            assertNotNull(item.description);
+        }
+
     }
 }

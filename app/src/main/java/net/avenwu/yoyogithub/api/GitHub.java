@@ -6,6 +6,7 @@ import android.util.Log;
 import net.avenwu.yoyogithub.BuildConfig;
 import net.avenwu.yoyogithub.bean.FeedUrl;
 import net.avenwu.yoyogithub.bean.Repo;
+import net.avenwu.yoyogithub.bean.SearchRepoResult;
 import net.avenwu.yoyogithub.bean.ShortUserInfo;
 import net.avenwu.yoyogithub.bean.User;
 import net.avenwu.yoyogithub.bean.XmlFeedTimeline;
@@ -25,6 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 /**
@@ -44,6 +46,7 @@ public class GitHub {
                         public Response intercept(Chain chain) throws IOException {
                             Request request = chain.request().newBuilder()
                                     .header("Accept", "application/vnd.github.v3+json")
+                                    .header("Time-Zone", "Asia/Shanghai")
                                     .build();
                             return chain.proceed(request);
                         }
@@ -79,7 +82,7 @@ public class GitHub {
         Call<User> users(@Path("user") String user);
 
         @GET("users/{user}/repos")
-        Call<List<Repo>> repos(@Path("user") String user);
+        Call<List<Repo>> repos(@Path("user") String user/*, @Query("page") int page, @Query("per_page")int per_page*/);
 
         @GET("users/{user}/followers")
         Call<List<ShortUserInfo>> followers(@Path("user") String user);
@@ -89,6 +92,15 @@ public class GitHub {
 
         @GET("feeds")
         Call<FeedUrl> feedUrl();
+
+        /**
+         * @param q     string	The search keywords, as well as any qualifiers.
+         * @param sort  string  One of stars, forks, or updated. Default: results are sorted by best match.
+         * @param order string	The sort order if sort parameter is provided. One of asc or desc. Default: desc
+         * @return
+         */
+        @GET("search/repositories")
+        Call<SearchRepoResult> searchRepo(@Query("q") String q, @Query("sort") String sort, @Query("order") String order);
 
         @GET
         Call<XmlFeedTimeline> userFeed(@Url String url);

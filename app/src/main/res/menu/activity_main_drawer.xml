@@ -22,14 +22,15 @@
             android:id="@+id/nav_following"
             android:icon="@drawable/ic_people_black_24dp"
             android:title="Following" />
-        <item
-            android:id="@+id/nav_search"
-            android:icon="@drawable/ic_search_black_24dp"
-            android:title="Search" />
+
     </group>
 
     <item android:title="Communicate">
         <menu>
+            <item
+                android:id="@+id/nav_search"
+                android:icon="@drawable/ic_search_black_24dp"
+                android:title="Search" />
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"

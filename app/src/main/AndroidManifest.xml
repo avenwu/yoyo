@@ -17,8 +17,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.LoginActivity"
-            android:label="@string/app_name">
-        </activity>
+            android:label="@string/app_name" />
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
@@ -29,6 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.SearchActivity"
+            android:label="@string/activity_search" />
     </application>
 
 </manifest>
