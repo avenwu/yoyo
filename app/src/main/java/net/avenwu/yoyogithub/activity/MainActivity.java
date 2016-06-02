@@ -24,6 +24,7 @@ import net.avenwu.yoyogithub.fragment.FragmentUserList;
 import net.avenwu.yoyogithub.bean.User;
 import net.avenwu.yoyogithub.presenter.Presenter;
 import net.avenwu.yoyogithub.presenter.ProfilePresenter;
+import net.avenwu.yoyogithub.util.Preference;
 import net.avenwu.yoyogithub.widget.EmptyLayout;
 
 import java.lang.ref.WeakReference;
@@ -32,8 +33,7 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
         implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawer;
     NavigationView navigationView;
-    //TODO
-    String userName = "avenwu";
+    String userName;
     SparseArray<WeakReference<Fragment>> mFragments = new SparseArray<>(4);
     EmptyLayout mEmptyLayout;
 
@@ -56,6 +56,23 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
         }
+        fetchInfo();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        try {
+            navigationView.removeHeaderView(navigationView.getHeaderView(0));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mFragments.clear();
+        fetchInfo();
+    }
+
+    private void fetchInfo() {
+        userName = Preference.get(this).getUserAccountName();
         presenter(new Presenter.Action<ProfilePresenter>() {
             @Override
             public void onRender(ProfilePresenter data) {
@@ -70,6 +87,9 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
                         }
                         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                         drawer.openDrawer(Gravity.START);
+                        // 模拟点击导航菜单
+                        navigationView.setCheckedItem(R.id.nav_public_activity);
+                        onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_public_activity));
                     }
                 }).addAction(Presenter.ACTION_2, new Presenter.Action<String>() {
                     @Override
@@ -120,9 +140,15 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_change_account:
+                Intent intent = new Intent(this, ChangeUserActivity.class);
+                intent.putExtra("change_account", true);
+                startActivity(intent);
+                break;
+            case R.id.action_settings:
+
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -136,9 +162,9 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
         Fragment fragment = null;
         if (reference == null || reference.get() == null) {
             switch (id) {
-                case R.id.nav_contributions:
+               /* case R.id.nav_contributions:
                     fragment = ContributionFragment.newInstance(userName);
-                    break;
+                    break;*/
                 case R.id.nav_repositories:
                     fragment = FragmentRepoList.newInstance(userName);
                     break;

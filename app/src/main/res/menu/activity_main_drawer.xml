@@ -2,18 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item
+       <!-- <item
             android:id="@+id/nav_contributions"
             android:icon="@drawable/ic_add_box_black_24dp"
-            android:title="Contributions" />
-        <item
-            android:id="@+id/nav_repositories"
-            android:icon="@drawable/ic_collections_bookmark_black_24dp"
-            android:title="Repositories" />
+            android:title="Contributions" />-->
         <item
             android:id="@+id/nav_public_activity"
             android:icon="@drawable/ic_sort_black_24dp"
             android:title="Public activity" />
+        <item
+            android:id="@+id/nav_repositories"
+            android:icon="@drawable/ic_collections_bookmark_black_24dp"
+            android:title="Repositories" />
+
         <item
             android:id="@+id/nav_follower"
             android:icon="@drawable/ic_group_add_black_24dp"

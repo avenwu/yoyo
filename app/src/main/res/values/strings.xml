@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">YoYo Github</string>
+    <string name="app_name">YoYo</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -20,4 +20,5 @@
 
     <string name="action_settings">Settings</string>
     <string name="activity_search">Search</string>
+    <string name="activity_change_user">Change Account</string>
 </resources>
