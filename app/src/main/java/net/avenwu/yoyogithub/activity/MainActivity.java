@@ -31,11 +31,11 @@ import java.lang.ref.WeakReference;
 
 public class MainActivity extends BaseActivity<ProfilePresenter>
         implements NavigationView.OnNavigationItemSelectedListener {
-    DrawerLayout drawer;
-    NavigationView navigationView;
-    String userName;
-    SparseArray<WeakReference<Fragment>> mFragments = new SparseArray<>(4);
-    EmptyLayout mEmptyLayout;
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
+    private String userName;
+    private SparseArray<WeakReference<Fragment>> mFragments = new SparseArray<>(4);
+    private EmptyLayout mEmptyLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class MainActivity extends BaseActivity<ProfilePresenter>
                             navigationView.addHeaderView(binding.navHeaderContainer);
                         }
                         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                        drawer.openDrawer(Gravity.START);
+                        drawer.openDrawer(GravityCompat.START);
                         // 模拟点击导航菜单
                         navigationView.setCheckedItem(R.id.nav_public_activity);
                         onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_public_activity));
