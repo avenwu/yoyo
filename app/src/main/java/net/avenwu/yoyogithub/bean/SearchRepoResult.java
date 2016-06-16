@@ -66,7 +66,7 @@ public class SearchRepoResult {
         public long size;
         public long stargazers_count;
         public long watchers_count;
-        public String languagel;
+        public String language;
         public long forks_count;
         public long open_issues_count;
         public String master_branch;

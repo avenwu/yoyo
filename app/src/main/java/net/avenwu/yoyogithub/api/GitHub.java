@@ -61,8 +61,6 @@ public class GitHub {
             }
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://api.github.com/")
-//                    .addConverterFactory(GsonConverterFactory.create())
-//                    .addConverterFactory(SimpleXmlConverterFactory.create())
                     .addConverterFactory(GitHubConverterFactory.create().xmlBean(XmlFeedTimeline.class))
                     .client(builder.build())
                     .build();
@@ -104,5 +102,8 @@ public class GitHub {
 
         @GET
         Call<XmlFeedTimeline> userFeed(@Url String url);
+
+        @GET("search/users")
+        Call searchUser(@Query("q") String q, @Query("sort") String sort, @Query("order") String order);
     }
 }
