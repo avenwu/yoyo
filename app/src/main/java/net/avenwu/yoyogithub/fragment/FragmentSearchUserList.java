@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import net.avenwu.yoyogithub.adapter.SearchRepoListAdapter;
+import net.avenwu.yoyogithub.adapter.SearchUserListAdapter;
 import net.avenwu.yoyogithub.bean.SearchRepoResult;
+import net.avenwu.yoyogithub.bean.SearchUserResult;
 import net.avenwu.yoyogithub.presenter.Presenter;
 import net.avenwu.yoyogithub.presenter.SearchPresenter;
 import net.avenwu.yoyogithub.widget.RecyclerViewDecorator;
@@ -20,16 +22,16 @@ import net.avenwu.yoyogithub.widget.RecyclerViewDecorator;
  * Created by Chaobin Wu on 6/16/16.
  */
 
-public class FragmentSearchRepoList extends BaseFragment<SearchPresenter> implements RecyclerViewDecorator.Callback {
+public class FragmentSearchUserList extends BaseFragment<SearchPresenter> implements RecyclerViewDecorator.Callback {
     private String mKeyword;
     private RecyclerViewDecorator mHelper;
     private boolean mIsRefresh = true;
 
-    public FragmentSearchRepoList() {
+    public FragmentSearchUserList() {
     }
 
-    public static FragmentSearchRepoList newInstance(String keyword) {
-        FragmentSearchRepoList fragment = new FragmentSearchRepoList();
+    public static FragmentSearchUserList newInstance(String keyword) {
+        FragmentSearchUserList fragment = new FragmentSearchUserList();
         Bundle args = new Bundle();
         args.putString("keyword", keyword);
         fragment.setArguments(args);
@@ -57,7 +59,7 @@ public class FragmentSearchRepoList extends BaseFragment<SearchPresenter> implem
 
     @Override
     public RecyclerView.Adapter onCreateAdapter() {
-        return new SearchRepoListAdapter();
+        return new SearchUserListAdapter();
     }
 
     @Override
@@ -70,12 +72,12 @@ public class FragmentSearchRepoList extends BaseFragment<SearchPresenter> implem
         presenter(new Presenter.Action<SearchPresenter>() {
             @Override
             public void onRender(SearchPresenter data) {
-                data.addAction(Presenter.ACTION_1, new Presenter.Action<SearchRepoResult>() {
+                data.addAction(Presenter.ACTION_1, new Presenter.Action<SearchUserResult>() {
                     @Override
-                    public void onRender(SearchRepoResult data) {
+                    public void onRender(SearchUserResult data) {
                         mHelper.stopRefreshing();
                         if (data.items != null && !data.items.isEmpty()) {
-                            ((SearchRepoListAdapter) mHelper.getRecyclerView().getAdapter()).addDataList(data.items, !mIsRefresh);
+                            ((SearchUserListAdapter) mHelper.getRecyclerView().getAdapter()).addDataList(data.items, !mIsRefresh);
                         }
                         mIsRefresh = false;
                     }
@@ -87,7 +89,7 @@ public class FragmentSearchRepoList extends BaseFragment<SearchPresenter> implem
                     }
                 });
                 mHelper.startLoading();
-                data.searchRepo(mKeyword);
+                data.searchUser(mKeyword);
             }
         });
     }
@@ -98,7 +100,7 @@ public class FragmentSearchRepoList extends BaseFragment<SearchPresenter> implem
             @Override
             public void onRender(SearchPresenter data) {
                 mIsRefresh = true;
-                data.searchRepo(mKeyword);
+                data.searchUser(mKeyword);
             }
         });
     }

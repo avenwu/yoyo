@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">YoYo</string>
+    <string name="app_name">YoYo GitHub</string>
+    <string name="app_name_short">YYGitHub</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="user"
+            type="net.avenwu.yoyogithub.bean.SearchUserResult.Item" />
+
+        <variable
+            name="listener"
+            type="net.avenwu.yoyogithub.adapter.SearchUserListAdapter.UserClickListener" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_selector"
+        android:onClick="@{listener.onClickItem}"
+        android:tag="@{user.login}">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:scaleType="centerCrop"
+            app:error="@{@drawable/ic_person_avatar}"
+            app:imageUrl="@{user.avatar_url}"
+            app:roundAsCircle="@{true}"
+            tools:src="@drawable/ic_person_avatar" />
+
+        <TextView
+            android:id="@+id/tv_nick_name"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="72dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:singleLine="true"
+            android:text="@{user.login}"
+            android:textAppearance="?attr/textAppearanceListItem"
+            tools:text="name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@+id/tv_nick_name"
+            android:layout_marginLeft="72dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:autoLink="web"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            android:textSize="14sp"
+            app:link_underline="@{false}"
+            app:url_text="@{user.html_url}"
+            tools:text="https://www.github.com" />
+    </RelativeLayout>
+
+</layout>

@@ -7,6 +7,7 @@ import net.avenwu.yoyogithub.BuildConfig;
 import net.avenwu.yoyogithub.bean.FeedUrl;
 import net.avenwu.yoyogithub.bean.Repo;
 import net.avenwu.yoyogithub.bean.SearchRepoResult;
+import net.avenwu.yoyogithub.bean.SearchUserResult;
 import net.avenwu.yoyogithub.bean.ShortUserInfo;
 import net.avenwu.yoyogithub.bean.User;
 import net.avenwu.yoyogithub.bean.XmlFeedTimeline;
@@ -100,10 +101,11 @@ public class GitHub {
         @GET("search/repositories")
         Call<SearchRepoResult> searchRepo(@Query("q") String q, @Query("sort") String sort, @Query("order") String order);
 
+        @GET("search/users")
+        Call<SearchUserResult> searchUser(@Query("q") String q, @Query("sort") String sort, @Query("order") String order);
+
         @GET
         Call<XmlFeedTimeline> userFeed(@Url String url);
 
-        @GET("search/users")
-        Call searchUser(@Query("q") String q, @Query("sort") String sort, @Query("order") String order);
     }
 }

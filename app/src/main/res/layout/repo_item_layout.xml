@@ -23,13 +23,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{listener.onClickItem}"
-        android:background="@drawable/item_selector">
+        android:background="@drawable/item_selector"
+        android:onClick="@{listener.onClickItem}">
 
         <TextView
             android:id="@+id/tv_index"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:background="@drawable/circle_label_bg_shape"
@@ -58,7 +58,7 @@
                     android:layout_weight="2"
                     android:singleLine="true"
                     android:text="@{repo.name}"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     tools:text="YoYo GitGub" />
 
                 <TextView
@@ -66,24 +66,27 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:text="@{repo.language}"
+                    android:textSize="12sp"
                     tools:text="Swift" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:drawableRight="@drawable/ic_github_star"
                     android:drawablePadding="4dp"
+                    android:drawableRight="@drawable/ic_github_star"
                     android:text="@{repo.watchers + ``}"
+                    android:textSize="12sp"
                     tools:text="0" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:drawableRight="@drawable/ic_github_fork"
                     android:drawablePadding="4dp"
+                    android:drawableRight="@drawable/ic_github_fork"
                     android:text="@{repo.forks + ``}"
+                    android:textSize="12sp"
                     tools:text="0" />
 
             </LinearLayout>
@@ -92,11 +95,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="2"
                 android:paddingTop="8dp"
-                android:text="@{repo.description}"
                 android:textSize="14sp"
-                android:visibility="@{TextUtils.isEmpty(repo.description)?View.GONE:View.VISIBLE}"
+                android:text="@{TextUtils.isEmpty(repo.description) ?`This project has no description yet!`:repo.description}"
                 tools:text="YoYo GitHub is an android application based on github api" />
 
             <TextView
@@ -104,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="4dp"
                 android:text="@{TimeUtils.formatTimeAsRecently(repo.updated_at)}"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 tools:text="Updated 4 days ago" />
         </LinearLayout>
     </RelativeLayout>
